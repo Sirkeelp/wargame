@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-image: url(images/inicio.jpg);
+            background-size: cover;
+            text-align: center;
+        }
+        header{
+             height: 10px;
+             /* display: flex; */
+             text-align: center;
+             margin-top: -200px;
+
+
+        }
+        nav{
+            text-align: center;
+            font-size: 40px;
+            background-color: #160c0c9d;
+            /* height: 200px; */
+            /* width: 700px; */
+            padding: 50px;
+            margin: 300px;
+        }
+        button{
+    background:#e7ecec10;
+    color:#faefef;
+    border:none;
+    position:relative;
+    height:40px;
+    width: 500px;
+    font-size:0.7em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  button:hover{
+    background:#a70707;
+    color:#02010a;
+  }
+  button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #ab1a1a;
+    transition:400ms ease all;
+  }
+  button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+    </style>
+</head>
+<body>
+    <header>
+        <!-- <img src="images/logo.png" alt=""> -->
+        <nav>
+            <button>Tamaño Tablero</button><br>
+            <button>Cantidad De Bases</button><br>
+            <button>Cantidad Artilleria</button><br>
+            <button>Color De Base</button><br><br>
+            <a href="index.html"><button>Inicio</button></a><br>
+            
+     </nav>
+    </header>
+    <main>
+
+    </main>
+    <footer>
+        <div class="fo1">
+            <a href="http://">Aviso legal|</a>
+            <a href="http://">Política de privacidad|</a>
+            <a href="http://">Normas de funcionamiento|</a>
+            <a href="http://">Política de cookies|</a>
+        </div>
+        <div class="fo2">
+            Todo el contenido del sitio Instinto Animal y © . Entertainment Inc.,a menos que se indique lo contrario aquí. Todos los derechos reservados.
+        </div>
+        
+    </footer>
+
+    
+</body>
+</html>

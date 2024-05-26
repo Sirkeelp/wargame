@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-image: url(images/inicio.jpg);
+            background-size: cover;
+            text-align: center;
+        }
+        header{
+             height: 80px;
+             /* display: flex; */
+             text-align: center;
+             margin-top: -100px;
+
+
+        }
+        nav{
+            text-align: center;
+            font-size: 40px;
+            background-color: #160c0c9d;
+            /* height: 200px; */
+            /* width: 700px; */
+            padding: 50px;
+            margin: 300px;
+        }
+        button{
+    background:#e7ecec10;
+    color:#faefef;
+    border:none;
+    position:relative;
+    height:40px;
+    width: 500px;
+    font-size:1em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  button:hover{
+    background:#a70707;
+    color:#010007;
+  }
+  button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #ab1a1a;
+    transition:400ms ease all;
+  }
+  button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+  img{
+    width: 200px;
+    height: 150px;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <!-- <img src="images/logo.png" alt=""> -->
+        <nav>
+            <a href="#"><button>START</button></a><br>
+            <a href="option.html"><button>OPTION</button></a><br>
+            <button>1 VS 1 </button><br>
+            <button>CREDITS</button><br>
+            
+        </nav>
+    </header>
+
+    
+</body>
+</html>
