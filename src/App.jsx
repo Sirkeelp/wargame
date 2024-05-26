@@ -1,12 +1,67 @@
-const board_col = ['a','b', 'c', 'd', 'e',' f']
-const board_row = ['1','2', '3', '4', '5','6']
+import { useState } from "react"
+import { coordinates, board_config } from "../test/inputs.js"
 
-function Button({children}) {
+function Button({children, base, attacked}) {
+  const [active, setActive] = useState(false)
+  
+  function disableBtn(e) {
+    e.preventDefault()
+    if (e.currentTarget.diabled)
+      return
+    e.currentTarget.diabled = true
+    setActive(true)
+  }
+
   return (
     <>
-      <button className="h-10 w-10 p-1 border-2 hover:bg-gray-200">
-          {children}
-      </button>
+      {
+        (!base)
+          ? (<button
+              className="h-10 w-10 p-1 border-2 hover:bg-gray-200 disabled:bg-red-300"
+              disabled={active}
+              onClick={disableBtn}
+            >
+                {children}
+            </button>)
+          : (<button
+              className="h-10 w-10 p-1 border-2 hover:bg-gray-200 disabled:bg-red-300 bg-green-300"
+              disabled={active}
+              onClick={disableBtn}
+            >
+                {children}
+            </button>)
+      }
+    </>
+  )
+}
+
+function Board() {
+  return (
+    <>
+      { 
+        coordinates.map((item, index) => {
+          if (index != 0 && index % board_config.board_cols == 0)
+            return (
+          <>
+              <Button
+                  key={item.position}
+                  base={item.base}
+                  attacked={item.attacked}
+                >
+                  <p>{item.position}</p>
+                </Button>
+              <br/>
+          </>
+          )
+          return (<Button
+          key={item.position}
+          base={item.base}
+          attacked={item.attacked}
+        >
+          <p>{item.position}</p>
+        </Button>)
+        }
+      )}
     </>
   )
 }
@@ -15,22 +70,7 @@ function App() {
   return (
     <>
       <section className="p-3">
-        {
-          board_col.map((letter, index) => {
-            return (
-              <>
-                {
-                  board_row.map((num) =>
-                  <Button key={index + letter + num}>
-                    <p>{letter.toUpperCase() + num}</p>
-                  </Button>
-                  )
-                }
-                <br />
-              </>
-              )
-          })
-        }
+        { Board() }
       </section>
     </>
   )
