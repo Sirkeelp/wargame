@@ -4,7 +4,7 @@
 // const base_col = Math.floor(Math.random() * 6)
 // const base_row = Math.floor(Math.random() * 6)
 
-// const coordinates = board_col.map((letter, index_col) => 
+// const coordinates = board_col.map((letter, index_col) =>
 //     board_row.map((num, index_row) => {
 //         if (index_col == base_col && index_row == base_row)
 //             return { position: `${letter + num}`, base: true, attacked: false}
@@ -12,10 +12,10 @@
 //     }
 // )).flat()
 
-const board_config = {
-    board_cols: 6
+const boardConfig = {
+  board_cols: 6
 }
 
 export {
-    board_config
+  boardConfig
 }

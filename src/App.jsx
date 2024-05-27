@@ -1,14 +1,22 @@
-import { useState } from "react"
-import example from "../test/test.json"
-import {board_config} from "../test/inputs.js"
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import example from '../test/test.json'
+import { boardConfig } from '../test/inputs.js'
 
-function Button({children, base, attacked, nextRow = false}) {
+Button.propTypes = {
+  children: PropTypes.element,
+  base: PropTypes.bool,
+  attacked: PropTypes.bool,
+  nextRow: PropTypes.bool
+}
+
+function Button ({ children, base, attacked, nextRow = false }) {
   const [active, setActive] = useState(attacked)
-  
-  function disableBtn(e) {
+
+  function disableBtn (e) {
     e.preventDefault()
-    if (e.currentTarget.diabled)
-      return
+
+    if (e.currentTarget.diabled) { return }
     e.currentTarget.diabled = true
     setActive(true)
   }
@@ -27,25 +35,25 @@ function Button({children, base, attacked, nextRow = false}) {
   )
 }
 
-function Board() {
+function Board () {
   return (
     <>
-      { 
-        example.map((item, index) => 
+      {
+        example.map((item, index) =>
           <Button
           key={item.id}
           base={item.base}
           attacked={item.attacked}
-          nextRow={index != 0 && index % board_config.board_cols == 0}
+          nextRow={index !== 0 && index % boardConfig.board_cols === 0}
         >
           <p>{item.coordinate}</p>
-        </Button>)  
+        </Button>)
       }
     </>
   )
 }
 
-function App() {
+function App () {
   return (
     <>
       <section className="p-3">
