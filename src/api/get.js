@@ -1,14 +1,10 @@
-import mock from '../test/test.json'
-
-/* async function getTable () {
+async function getTable () {
   return JSON.parse(localStorage.getItem('currentGame'))
 }
- */
+
 async function newGame () {
-  const req = await fetch(mock)
-  console.log(req)
+  const req = await fetch('../test/test.json')
   const data = await req.json()
-  // const data = mock
   console.log('no aqui')
   const newArr = data.map((item) => {
     return {
@@ -21,4 +17,4 @@ async function newGame () {
   return newArr
 }
 
-export { newGame }
+export { newGame, getTable }
