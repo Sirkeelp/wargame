@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { boardConfig } from '../test/inputs.js'
+import { boardConfig } from './test/inputs.js'
 import { innitGame } from './utils/utils.js'
+// import { updatePosition } from './api/put.js'
+// import { deleteTable } from './api/delete.js'
 
 Button.propTypes = {
   children: PropTypes.element,
+  id: PropTypes.string,
   base: PropTypes.bool,
   attacked: PropTypes.bool,
   nextRow: PropTypes.bool
 }
 
-function Button ({ children, base, attacked, nextRow = false }) {
+function Button ({ children, id, base, attacked, nextRow = false }) {
   const [active, setActive] = useState(attacked)
 
-  function disableBtn (e) {
+  async function attackPosition (e) {
     e.preventDefault()
 
     if (e.currentTarget.diabled) { return }
     e.currentTarget.diabled = true
     setActive(true)
+
+    // await updatePosition({ id: e.currentTarget.id })
   }
 
   return (
@@ -27,7 +32,8 @@ function Button ({ children, base, attacked, nextRow = false }) {
         <button
           className={`h-10 w-10 p-1 border-2 hover:bg-gray-200 disabled:bg-red-300 ${base && 'bg-green-300'}`}
           disabled={active}
-          onClick={disableBtn}
+          onClick={attackPosition}
+          id={id}
         >
           {children}
         </button>
@@ -55,6 +61,7 @@ function Board () {
           key={item.id}
           base={item.base}
           attacked={item.attacked}
+          id={item.id}
           nextRow={index !== 0 && index % boardConfig.board_cols === 0}
         >
           <p>{item.coordinate}</p>
@@ -63,6 +70,19 @@ function Board () {
     </>
   )
 }
+
+/* function Actionbuttons () {
+  async function restartGame (e) {
+    e.preventDefault()
+    await deleteTable()
+    await innitGame()
+  }
+  return (
+    <form onSubmit={restartGame}>
+      <button type='submit'>Restart</button>
+    </form>
+  )
+} */
 
 function App () {
   return (

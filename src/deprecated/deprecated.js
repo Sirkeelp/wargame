@@ -11,11 +11,3 @@
 //         return { position: `${letter + num}`, base: false, attacked: false}
 //     }
 // )).flat()
-
-const boardConfig = {
-  board_cols: 6
-}
-
-export {
-  boardConfig
-}

@@ -1,15 +1,11 @@
+import { newGame } from '../api/get'
+
 async function innitGame () {
-  const req = await fetch('../../test/test.json')
-  const data = await req.json()
-  const newArr = data.map((item) => {
-    return {
-      coordinate: item.coordinate,
-      base: item.base,
-      attacked: item.attacked,
-      id: item.id
-    }
-  })
-  return newArr
+  // const savedMap = await getTable()
+  // if (savedMap !== null) return savedMap
+  console.log('aqui')
+  const newMap = await newGame()
+  return newMap
 }
 
 export {
