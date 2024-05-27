@@ -3,6 +3,4 @@ async function saveTable (table) {
   localStorage.setItem('currentGame', JSON.stringify(table))
 }
 
-export {
-  saveTable
-}
+export { saveTable }

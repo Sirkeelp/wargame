@@ -49,38 +49,34 @@ function Board () {
     setGameMap(newGameMap)
   }
 
-  useEffect(() => {
-    generateMap()
-  }, [])
-
-  return (
-    <>
-      {
-        gameMap.map((item, index) =>
-          <Button
-          key={item.id}
-          base={item.base}
-          attacked={item.attacked}
-          id={item.id}
-          nextRow={index !== 0 && index % boardConfig.board_cols === 0}
-        >
-          <p>{item.coordinate}</p>
-        </Button>)
-      }
-    </>
-  )
-}
-
-function Actionbuttons () {
   async function restartGame (e) {
     e.preventDefault()
     await deleteTable()
-    await innitGame()
+    setGameMap([])
   }
+
+  useEffect(() => {
+    if (gameMap.length === 0) generateMap()
+  }, [gameMap])
+
   return (
-    <form onSubmit={restartGame}>
-      <button type='submit'>Restart</button>
-    </form>
+    <>
+      <article>
+        {
+          gameMap.map((item, index) =>
+            <Button
+            key={item.id}
+            base={item.base}
+            attacked={item.attacked}
+            id={item.id}
+            nextRow={index !== 0 && index % boardConfig.board_cols === 0}
+          >
+            <p>{item.coordinate}</p>
+          </Button>)
+        }
+      </article>
+      <button type='button' onClick={restartGame}>Restart</button>
+    </>
   )
 }
 
@@ -89,7 +85,6 @@ function App () {
     <>
       <section className="p-3">
         { Board() }
-        <Actionbuttons />
       </section>
     </>
   )
