@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import example from '../test/test.json'
 import { boardConfig } from '../test/inputs.js'
+import { innitGame } from './utils/utils.js'
 
 Button.propTypes = {
   children: PropTypes.element,
@@ -36,10 +36,21 @@ function Button ({ children, base, attacked, nextRow = false }) {
 }
 
 function Board () {
+  const [gameMap, setGameMap] = useState([])
+
+  async function generateMap () {
+    const newGameMap = await innitGame()
+    setGameMap(newGameMap)
+  }
+
+  useEffect(() => {
+    generateMap()
+  }, [])
+
   return (
     <>
       {
-        example.map((item, index) =>
+        gameMap.map((item, index) =>
           <Button
           key={item.id}
           base={item.base}
