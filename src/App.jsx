@@ -81,10 +81,18 @@ function Board () {
 }
 
 function App () {
+  const [cpuGame, setCpuGame] = useState(false)
+  function soloGame () {
+    setCpuGame(true)
+  }
   return (
     <>
       <section className="p-3">
-        { Board() }
+        {
+          cpuGame
+            ? <Board />
+            : <button className='p-2 rounded-md bg-slate-300 hover:bg-slate-600' onClick={soloGame}>1 vs CPU</button>
+        }
       </section>
     </>
   )
