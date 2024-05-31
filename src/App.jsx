@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { boardConfig } from '../test/inputs.js'
+import { GAME_CONFIG } from '../test/inputs.js'
 import { innitGame } from './utils/utils.js'
 import { updatePosition } from './api/put.js'
 import { deleteTable } from './api/delete.js'
@@ -18,7 +18,7 @@ function AttackButton ({ item, index }) {
     coordinate
   } = item
 
-  const nextRow = index !== 0 && index % boardConfig.board_cols === 0
+  const nextRow = index !== 0 && index % GAME_CONFIG.BOARD_SIZE === 0
 
   const [active, setActive] = useState(attacked)
 

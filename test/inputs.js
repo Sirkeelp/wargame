@@ -1,7 +1,8 @@
-const boardConfig = {
-  board_cols: 6
+const GAME_CONFIG = {
+  BOARD_SIZE: 6,
+  MAX_BASES: 3
 }
 
 export {
-  boardConfig
+  GAME_CONFIG
 }
