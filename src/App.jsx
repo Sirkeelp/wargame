@@ -5,15 +5,21 @@ import { innitGame } from './utils/utils.js'
 import { updatePosition } from './api/put.js'
 import { deleteTable } from './api/delete.js'
 
-Button.propTypes = {
-  children: PropTypes.element,
-  id: PropTypes.string,
-  base: PropTypes.bool,
-  attacked: PropTypes.bool,
-  nextRow: PropTypes.bool
+AttackButton.propTypes = {
+  item: PropTypes.object,
+  index: PropTypes.number
 }
 
-function Button ({ children, id, base, attacked, nextRow = false }) {
+function AttackButton ({ item, index }) {
+  const {
+    id,
+    base,
+    attacked,
+    coordinate
+  } = item
+
+  const nextRow = index !== 0 && index % boardConfig.board_cols === 0
+
   const [active, setActive] = useState(attacked)
 
   async function attackPosition (e) {
@@ -35,13 +41,34 @@ function Button ({ children, id, base, attacked, nextRow = false }) {
           onClick={attackPosition}
           id={id}
         >
-          {children}
+          <p>{coordinate}</p>
         </button>
     </>
   )
 }
 
-function Board () {
+Board.propTypes = {
+  children: PropTypes.array,
+  restartGame: PropTypes.func
+}
+
+function Board ({ children, restartGame }) {
+  return (
+    <>
+      <article>
+        { children }
+      </article>
+      <button type='button' onClick={restartGame}>Restart</button>
+    </>
+  )
+}
+
+function App () {
+  const [cpuGame, setCpuGame] = useState(false)
+  function soloGame () {
+    setCpuGame(true)
+  }
+
   const [gameMap, setGameMap] = useState([])
 
   async function generateMap () {
@@ -58,39 +85,23 @@ function Board () {
   useEffect(() => {
     if (gameMap.length === 0) generateMap()
   }, [gameMap])
-
-  return (
-    <>
-      <article>
-        {
-          gameMap.map((item, index) =>
-            <Button
-            key={item.id}
-            base={item.base}
-            attacked={item.attacked}
-            id={item.id}
-            nextRow={index !== 0 && index % boardConfig.board_cols === 0}
-          >
-            <p>{item.coordinate}</p>
-          </Button>)
-        }
-      </article>
-      <button type='button' onClick={restartGame}>Restart</button>
-    </>
-  )
-}
-
-function App () {
-  const [cpuGame, setCpuGame] = useState(false)
-  function soloGame () {
-    setCpuGame(true)
-  }
   return (
     <>
       <section className="p-3">
         {
           cpuGame
-            ? <Board />
+            ? <>
+              <Board restartGame={restartGame}>
+                {
+                  gameMap.map((item, index) =>
+                    <AttackButton
+                      key={item.id}
+                      item={item}
+                      index={index}
+                    />)
+                }
+              </Board>
+            </>
             : <button className='p-2 rounded-md bg-slate-300 hover:bg-slate-600' onClick={soloGame}>1 vs CPU</button>
         }
       </section>
