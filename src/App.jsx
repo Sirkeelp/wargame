@@ -4,6 +4,50 @@ import { GAME_CONFIG } from '../test/inputs.js'
 import { innitGame } from './utils/utils.js'
 import { updatePosition } from './api/put.js'
 import { deleteTable } from './api/delete.js'
+import { useBases } from './hooks/useBases.jsx'
+
+BaseButton.propTypes = {
+  id: PropTypes.string,
+  coordinate: PropTypes.string,
+  index: PropTypes.number,
+  updateTotalBases: PropTypes.func,
+  maxBases: PropTypes.func,
+  decreaseBases: PropTypes.func
+}
+
+function BaseButton ({ id, coordinate, index, updateTotalBases, maxBases, decreaseBases }) {
+  const [base, setBase] = useState(false)
+
+  const nextRow = index !== 0 && index % GAME_CONFIG.BOARD_SIZE === 0
+
+  async function placeBase (e) {
+    e.preventDefault()
+
+    if (base) {
+      setBase(false)
+      decreaseBases()
+      return
+    }
+
+    if (maxBases()) { return }
+
+    setBase(true)
+    updateTotalBases()
+  }
+
+  return (
+    <>
+        { nextRow && <br/> }
+        <button
+          className={`h-10 w-10 p-1 border-2 ${!base ? 'hover:bg-green-300 bg-none' : 'bg-green-500'}`}
+          onClick={placeBase}
+          id={id}
+        >
+          <p>{coordinate}</p>
+        </button>
+    </>
+  )
+}
 
 AttackButton.propTypes = {
   item: PropTypes.object,
@@ -48,23 +92,22 @@ function AttackButton ({ item, index }) {
 }
 
 Board.propTypes = {
-  children: PropTypes.array,
-  restartGame: PropTypes.func
+  children: PropTypes.array
 }
 
-function Board ({ children, restartGame }) {
+function Board ({ children }) {
   return (
     <>
       <article>
         { children }
       </article>
-      <button type='button' onClick={restartGame}>Restart</button>
     </>
   )
 }
 
 function App () {
-  const [cpuGame, setCpuGame] = useState(false)
+  const [cpuGame, setCpuGame] = useState(true)
+  const { updateTotalBases, maxBasesReached, resetBases, decreaseBases } = useBases()
   function soloGame () {
     setCpuGame(true)
   }
@@ -80,14 +123,15 @@ function App () {
     e.preventDefault()
     await deleteTable()
     setGameMap([])
+    resetBases()
   }
 
   useEffect(() => {
     if (gameMap.length === 0) generateMap()
   }, [gameMap])
   return (
-    <>
-      <section className="p-3">
+    <main className='p-3 '>
+      <section className="flex gap-8">
         {
           cpuGame
             ? <>
@@ -104,8 +148,35 @@ function App () {
             </>
             : <button className='p-2 rounded-md bg-slate-300 hover:bg-slate-600' onClick={soloGame}>1 vs CPU</button>
         }
+
+        {
+          cpuGame &&
+            <Board restartGame={restartGame}>
+              {
+                gameMap.map((item, index) =>
+                  <BaseButton
+                    key={item.id}
+                    id={item.id}
+                    coordinate={item.coordinate}
+                    index={index}
+                    updateTotalBases={updateTotalBases}
+                    maxBases={maxBasesReached}
+                    decreaseBases={decreaseBases}
+                  />)
+              }
+            </Board>
+        }
       </section>
-    </>
+      {
+        cpuGame &&
+        <button
+          type='button'
+          className='mt-3 p-2 rounded-md border-2 bg-slate-300 hover:bg-slate-600'
+          onClick={restartGame}>
+          Restart
+        </button>
+      }
+    </main>
   )
 }
 
